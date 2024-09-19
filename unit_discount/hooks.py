@@ -227,3 +227,11 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+from unit_discount.overrides.custom_price_list import apply_price_discount_rule
+from erpnext.accounts.doctype.pricing_rule import pricing_rule
+pricing_rule.apply_price_discount_rule = apply_price_discount_rule
+
+fixtures = [
+    { "dt": "Custom Field", "filters": [["module", "=", "Unit Discount"]]},
+    { "dt": "Property Setter", "filters": [["module", "=", "Unit Discount"]]}
+]
