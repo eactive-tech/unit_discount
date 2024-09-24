@@ -57,35 +57,38 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 
 			conversion = get_item_conversion(args.get('item_code'), pricing_rule.custom_discount_unit)
 
-			item_details['custom_discount_per_unit'] = pricing_rule[field]
-			item_details['custom_discount_per_unit_amount'] = conversion * args.qty * pricing_rule[field]
-			item_details['discount_amount'] = pricing_rule[field] * conversion
+			item_details['custom_discount_per_unit'] = pricing_rule.custom_discount_per_unit_rate
+			item_details['custom_discount_unit'] = pricing_rule.custom_discount_unit
+			item_details['custom_additional_quantity'] = conversion * args.qty
+			item_details['custom_unit_discount_amount'] = conversion * args.qty * pricing_rule.custom_discount_per_unit_rate
+			item_details['discount_amount'] = pricing_rule.custom_discount_per_unit_rate * conversion
 		
-		field = frappe.scrub(apply_on)
-		if pricing_rule.apply_discount_on_rate and item_details.get("discount_percentage"):
-			# Apply discount on discounted rate
-			item_details[field] += (100 - item_details[field]) * (pricing_rule.get(field, 0) / 100)
-		elif args.price_list_rate:
-			value = pricing_rule.get(field, 0)
-			calculate_discount_percentage = False
-			if field == "discount_percentage":
-				field = "discount_amount"
-				value = args.price_list_rate * (value / 100)
-				calculate_discount_percentage = True
-
-			if field not in item_details:
-				item_details.setdefault(field, 0)
-
-			item_details[field] += value if pricing_rule else args.get(field, 0)
-			if calculate_discount_percentage and args.price_list_rate and item_details.discount_amount:
-				item_details.discount_percentage = flt(
-					(flt(item_details.discount_amount) / flt(args.price_list_rate)) * 100
-				)
 		else:
-			if field not in item_details:
-				item_details.setdefault(field, 0)
+			field = frappe.scrub(apply_on)
+			if pricing_rule.apply_discount_on_rate and item_details.get("discount_percentage"):
+				# Apply discount on discounted rate
+				item_details[field] += (100 - item_details[field]) * (pricing_rule.get(field, 0) / 100)
+			elif args.price_list_rate:
+				value = pricing_rule.get(field, 0)
+				calculate_discount_percentage = False
+				if field == "discount_percentage":
+					field = "discount_amount"
+					value = args.price_list_rate * (value / 100)
+					calculate_discount_percentage = True
 
-			item_details[field] += pricing_rule.get(field, 0) if pricing_rule else args.get(field, 0)
+				if field not in item_details:
+					item_details.setdefault(field, 0)
+
+				item_details[field] += value if pricing_rule else args.get(field, 0)
+				if calculate_discount_percentage and args.price_list_rate and item_details.discount_amount:
+					item_details.discount_percentage = flt(
+						(flt(item_details.discount_amount) / flt(args.price_list_rate)) * 100
+					)
+			else:
+				if field not in item_details:
+					item_details.setdefault(field, 0)
+
+				item_details[field] += pricing_rule.get(field, 0) if pricing_rule else args.get(field, 0)
 
 
 def get_item_conversion(item_code, uom):
