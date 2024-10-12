@@ -52,16 +52,25 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 			continue
 
 		if apply_on == 'Discount Per Unit':
-			field = 'custom_discount_per_unit_rate'
-			value = pricing_rule.get(field, 0)
+			# field = 'custom_discount_per_unit_rate'
+			# value = pricing_rule.get(field, 0)
+
 
 			conversion = get_item_conversion(args.get('item_code'), pricing_rule.custom_discount_unit)
 
-			item_details['custom_discount_per_unit'] = pricing_rule.custom_discount_per_unit_rate
+			discount_rate = get_discount_rate(pricing_rule, item_details, args, conversion)
+			print("==========", discount_rate)
+			item_details['custom_discount_per_unit'] = discount_rate
 			item_details['custom_discount_unit'] = pricing_rule.custom_discount_unit
 			item_details['custom_additional_quantity'] = conversion * args.qty
-			item_details['custom_unit_discount_amount'] = conversion * args.qty * pricing_rule.custom_discount_per_unit_rate
-			item_details['discount_amount'] = pricing_rule.custom_discount_per_unit_rate * conversion
+			item_details['custom_unit_discount_amount'] = conversion * args.qty * discount_rate
+			item_details['discount_amount'] = discount_rate * conversion
+
+			# item_details['custom_discount_per_unit'] = pricing_rule.custom_discount_per_unit_rate
+			# item_details['custom_discount_unit'] = pricing_rule.custom_discount_unit
+			# item_details['custom_additional_quantity'] = conversion * args.qty
+			# item_details['custom_unit_discount_amount'] = conversion * args.qty * pricing_rule.custom_discount_per_unit_rate
+			# item_details['discount_amount'] = pricing_rule.custom_discount_per_unit_rate * conversion
 		
 		else:
 			field = frappe.scrub(apply_on)
@@ -99,3 +108,31 @@ def get_item_conversion(item_code, uom):
 			return u.conversion_factor
 	
 	return 1
+
+def get_discount_rate(pricing_rule, item_details, args, conversion):
+
+	if pricing_rule.custom_is_slab_discount == 1:
+		qty = conversion * args.qty
+		discount = 0
+		query = frappe.db.sql("""
+			SELECT
+				discount_per_unit
+			FROM
+				`tabPricing Rule Slab`
+			WHERE 
+				(%s between from_qty and to_qty and to_qty !=0)
+				OR (%s >= from_qty and to_qty = 0)
+				and parent = %s
+			LIMIT 1
+		""", (qty, qty, pricing_rule.name), as_dict=True)
+		
+		if len(query) == 1:
+			discount = query[0].get("discount_per_unit")
+			return discount
+		else: 
+			return 0
+	else:
+		return pricing_rule.custom_discount_per_unit_rate
+
+
+
