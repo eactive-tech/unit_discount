@@ -231,6 +231,12 @@ from unit_discount.overrides.custom_price_list import apply_price_discount_rule
 from erpnext.accounts.doctype.pricing_rule import pricing_rule
 pricing_rule.apply_price_discount_rule = apply_price_discount_rule
 
+
+from erpnext.accounts.doctype.promotional_scheme import promotional_scheme
+from unit_discount.overrides.custom_promotional_scheme import price_discount_fields
+promotional_scheme.price_discount_fields = price_discount_fields
+
+
 fixtures = [
     { "dt": "Custom Field", "filters": [["module", "=", "Unit Discount"]]},
     { "dt": "Property Setter", "filters": [["module", "=", "Unit Discount"]]}

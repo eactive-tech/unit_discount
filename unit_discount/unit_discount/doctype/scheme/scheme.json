@@ -1,0 +1,119 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:scheme_name",
+ "creation": "2024-10-20 19:07:50.211672",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "scheme_name",
+  "section_break_efcp",
+  "from_date",
+  "column_break_egum",
+  "to_date",
+  "section_break_bzma",
+  "applicable_for",
+  "column_break_fhat",
+  "customer_group",
+  "customers",
+  "section_break_exas",
+  "based_on",
+  "scheme_items"
+ ],
+ "fields": [
+  {
+   "fieldname": "scheme_name",
+   "fieldtype": "Data",
+   "label": "Scheme Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_efcp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From Date"
+  },
+  {
+   "fieldname": "column_break_egum",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To Date"
+  },
+  {
+   "fieldname": "section_break_bzma",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "applicable_for",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Applicable for",
+   "options": "\nCustomer\nCustomer Group"
+  },
+  {
+   "fieldname": "column_break_fhat",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "Customer Group",
+   "options": "Customer Group"
+  },
+  {
+   "fieldname": "customers",
+   "fieldtype": "Table MultiSelect",
+   "label": "Customers",
+   "options": "Customer Item"
+  },
+  {
+   "fieldname": "section_break_exas",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "based_on",
+   "fieldtype": "Select",
+   "label": "Based on",
+   "options": "\nQuantity\nAmount"
+  },
+  {
+   "fieldname": "scheme_items",
+   "fieldtype": "Table",
+   "label": "Scheme Items",
+   "options": "Scheme Slab"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-10-20 19:20:21.020762",
+ "modified_by": "Administrator",
+ "module": "Unit Discount",
+ "name": "Scheme",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
