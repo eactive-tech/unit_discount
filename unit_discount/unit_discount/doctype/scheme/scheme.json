@@ -18,7 +18,11 @@
   "customers",
   "section_break_exas",
   "based_on",
-  "scheme_items"
+  "column_break_gifi",
+  "discount_type",
+  "section_break_xkyg",
+  "scheme_items",
+  "ignore_sales_returns"
  ],
  "fields": [
   {
@@ -35,7 +39,8 @@
    "fieldname": "from_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "From Date"
+   "label": "From Date",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_egum",
@@ -45,7 +50,8 @@
    "fieldname": "to_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "To Date"
+   "label": "To Date",
+   "reqd": 1
   },
   {
    "fieldname": "section_break_bzma",
@@ -56,22 +62,27 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Applicable for",
-   "options": "\nCustomer\nCustomer Group"
+   "options": "\nCustomer\nCustomer Group",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_fhat",
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.applicable_for === 'Customer Group'",
    "fieldname": "customer_group",
    "fieldtype": "Link",
    "label": "Customer Group",
+   "mandatory_depends_on": "eval:doc.applicable_for === 'Customer Group'",
    "options": "Customer Group"
   },
   {
+   "depends_on": "eval:doc.applicable_for === 'Customer'",
    "fieldname": "customers",
    "fieldtype": "Table MultiSelect",
    "label": "Customers",
+   "mandatory_depends_on": "eval:doc.applicable_for === 'Customer'",
    "options": "Customer Item"
   },
   {
@@ -82,18 +93,41 @@
    "fieldname": "based_on",
    "fieldtype": "Select",
    "label": "Based on",
-   "options": "\nQuantity\nAmount"
+   "options": "\nQuantity\nAmount",
+   "reqd": 1
   },
   {
    "fieldname": "scheme_items",
    "fieldtype": "Table",
    "label": "Scheme Items",
-   "options": "Scheme Slab"
+   "options": "Scheme Slab",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_sales_returns",
+   "fieldtype": "Check",
+   "label": "Ignore Sales Returns"
+  },
+  {
+   "fieldname": "column_break_gifi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discount_type",
+   "fieldtype": "Select",
+   "label": "Discount Type",
+   "options": "Percentage\nGift Coupon\nCredit Note",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_xkyg",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-20 19:20:21.020762",
+ "modified": "2024-10-27 20:29:11.681335",
  "modified_by": "Administrator",
  "module": "Unit Discount",
  "name": "Scheme",
@@ -113,6 +147,7 @@
    "write": 1
   }
  ],
+ "search_fields": "scheme_name, from_date, to_date",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

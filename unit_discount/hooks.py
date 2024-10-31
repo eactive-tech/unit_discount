@@ -28,7 +28,7 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Customer" : "public/js/customer.js"}
+doctype_js = {"Customer" : "public/js/customer.js", "Sales Invoice": "public/js/sales_invoice.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -239,5 +239,7 @@ promotional_scheme.price_discount_fields = price_discount_fields
 
 fixtures = [
     { "dt": "Custom Field", "filters": [["module", "=", "Unit Discount"]]},
-    { "dt": "Property Setter", "filters": [["module", "=", "Unit Discount"]]}
+    { "dt": "Property Setter", "filters": [["module", "=", "Unit Discount"]]},
+    { "dt": "Server Script", "filters": [["module", "=", "Unit Discount"]]},
+    { "dt": "Client Script", "filters": [["module", "=", "Unit Discount"]]}
 ]
