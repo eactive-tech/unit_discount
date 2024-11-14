@@ -16,6 +16,11 @@
   "column_break_fhat",
   "customer_group",
   "customers",
+  "section_break_oeuz",
+  "item_or_group",
+  "column_break_vuet",
+  "item_group",
+  "items",
   "section_break_exas",
   "based_on",
   "column_break_gifi",
@@ -123,11 +128,40 @@
   {
    "fieldname": "section_break_xkyg",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_oeuz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "item_or_group",
+   "fieldtype": "Select",
+   "label": "Item or Group",
+   "options": "\nItem\nItem Group"
+  },
+  {
+   "fieldname": "column_break_vuet",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.item_or_group == 'Item Group'",
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "link_filters": "[[\"Item Group\",\"is_group\",\"=\",0]]",
+   "options": "Item Group"
+  },
+  {
+   "depends_on": "eval:doc.item_or_group == 'Item'",
+   "fieldname": "items",
+   "fieldtype": "Table MultiSelect",
+   "label": "Items",
+   "options": "Scheme Items"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-27 20:29:11.681335",
+ "modified": "2024-11-14 12:18:26.879337",
  "modified_by": "Administrator",
  "module": "Unit Discount",
  "name": "Scheme",
