@@ -12,6 +12,7 @@ app_license = "mit"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/unit_discount/css/unit_discount.css"
 # app_include_js = "/assets/unit_discount/js/unit_discount.js"
+app_include_js = "/unit_discount/public/js/sales_order.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/unit_discount/css/unit_discount.css"
@@ -28,7 +29,10 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"Customer" : "public/js/customer.js", "Sales Invoice": "public/js/sales_invoice.js"}
+doctype_js = {"Customer" : "public/js/customer.js",
+               "Sales Invoice": "public/js/sales_invoice.js",
+               "Sales Order": "public/js/sales_order.js"
+            }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -122,13 +126,20 @@ doctype_js = {"Customer" : "public/js/customer.js", "Sales Invoice": "public/js/
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	# "*": {
+	# 	"on_update": "method",
+	# 	"on_cancel": "method",
+	# 	"on_trash": "method"
+	# },
+    "Sales Order": {
+		# "on_update": "method",
+		# "on_cancel": "method",
+		# "on_trash": "method",
+        "before_submit": "unit_discount.overrides.custom_price_list.custom_before_submit",
+	}
+}
+
 
 # Scheduled Tasks
 # ---------------
