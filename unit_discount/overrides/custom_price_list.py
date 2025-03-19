@@ -60,13 +60,13 @@ def apply_price_discount_rule(pricing_rule, item_details, args):
 			conversion = get_item_conversion(args.get('item_code'), pricing_rule.custom_discount_unit)
 
 			discount_rate = get_discount_rate(pricing_rule, item_details, args, conversion)
-			print("==========", discount_rate)
+
 			item_details['custom_discount_per_unit'] = discount_rate
 			item_details['custom_discount_unit'] = pricing_rule.custom_discount_unit
-			item_details['custom_additional_quantity'] = conversion * args.qty
-			item_details['custom_unit_discount_amount'] = conversion * args.qty * discount_rate
+			item_details['custom_additional_quantity'] = conversion 
+			item_details['custom_unit_discount_amount'] = conversion * discount_rate
 			# item_details['discount_amount'] = discount_rate * conversion
-			item_details['discount_amount'] = discount_rate * conversion * args.qty
+			item_details['discount_amount'] = discount_rate * conversion
 
 			# item_details['custom_discount_per_unit'] = pricing_rule.custom_discount_per_unit_rate
 			# item_details['custom_discount_unit'] = pricing_rule.custom_discount_unit
